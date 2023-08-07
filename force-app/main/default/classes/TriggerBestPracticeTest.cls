@@ -23,7 +23,6 @@ In this challenge, you will be refactoring and consolidating multiple files to f
 Important Note: 
 No test methods should need to be altered to pass this challenge.
 */
-
 @IsTest
 public with sharing class TriggerBestPracticeTest {
     

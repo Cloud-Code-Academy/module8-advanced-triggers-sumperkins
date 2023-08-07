@@ -13,7 +13,6 @@ Avoid DML inside for loop - 1 instance
 Bulkify Your Code - 1 instance
 Avoid SOQL Query inside for loop - 2 instances
 Stop recursion - 1 instance
-
 */
 trigger AnotherOpportunityTrigger on Opportunity (before insert, after insert, before update, after update, before delete, after delete, after undelete) {
     if (Trigger.isBefore){

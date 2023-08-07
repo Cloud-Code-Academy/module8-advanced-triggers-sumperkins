@@ -17,7 +17,6 @@ For this lesson, students have two options:
 
 Let's dive into the specifics of each operation:
 */
-
 trigger AccountTrigger on Account (before insert, after insert) {
 
     /*
