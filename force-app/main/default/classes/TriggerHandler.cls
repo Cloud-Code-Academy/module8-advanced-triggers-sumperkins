@@ -1,27 +1,39 @@
 /*
-* https://github.com/kevinohara80/sfdc-trigger-framework/tree/master
-*/
+ * This is a general-purpose Trigger Framework designed to handle various trigger contexts like
+ * before insert, after insert, before update, etc.
+ * This framework provides a structured way to handle these operations and is designed to be 
+ * extensible, so developers can add more functionalities as needed.
+ * 
+ * IMPORTANT: This file is a foundational piece of code. It should NOT be edited directly. 
+ * Instead, extend this class to add more specific trigger functionalities.
+ * 
+ * Once the framework on your local machine, save and deploy this file into your Salesforce org.
+ * 
+ * Source: https://github.com/kevinohara80/sfdc-trigger-framework/tree/master
+ */
 public virtual class TriggerHandler {
 
-    // static map of handlername, times run() was invoked
+    // Keeps track of how many times the run() method was invoked for each handler
     private static Map<String, LoopCount> loopCountMap;
+
+    // List of handler names that should not be executed
     private static Set<String> bypassedHandlers;
     
-    // the current context of the trigger, overridable in tests
+    // Represents the current context in which the trigger is executing (e.g., before insert, after update, etc.)
     @TestVisible
     private TriggerContext context;
     
-    // the current context of the trigger, overridable in tests
+    // Indicates if the trigger is currently executing
     @TestVisible
     private Boolean isTriggerExecuting;
     
-    // static initialization
+    // Initialization of static variables
     static {
       loopCountMap = new Map<String, LoopCount>();
       bypassedHandlers = new Set<String>();
     }
     
-    // constructor
+    // Constructor initializes the trigger context
     public TriggerHandler() {
       this.setTriggerContext();
     }
@@ -30,41 +42,45 @@ public virtual class TriggerHandler {
      * public instance methods
      ***************************************/
     
-    // main method that will be called during execution
+    // Main method that handles the trigger execution
     public void run() {
+      
     
-        if(!validateRun()) {
-            return;
-        }
-    
-        addToLoopCount();
-    
-        // dispatch to the correct handler method
-        switch on this.context {
-            when BEFORE_INSERT {
-            this.beforeInsert();
-            }
-            when BEFORE_UPDATE {
-            this.beforeUpdate();
-            }
-            when BEFORE_DELETE {
-            this.beforeDelete();
-            }
-            when AFTER_INSERT {
-            this.afterInsert();
-            }
-            when AFTER_UPDATE {
-            this.afterUpdate();
-            }
-            when AFTER_DELETE {
-            this.afterDelete();
-            }
-            when AFTER_UNDELETE {
-            this.afterUndelete();
-            }
-        }
+      // Check if the trigger should continue execution
+      if(!validateRun()) {
+          return;
+      }
+  
+      // Increment the count of how many times this handler has run
+      addToLoopCount();
+  
+      // Dispatch execution to the appropriate handler method based on the trigger context
+      switch on this.context {
+          when BEFORE_INSERT {
+          this.beforeInsert();
+          }
+          when BEFORE_UPDATE {
+          this.beforeUpdate();
+          }
+          when BEFORE_DELETE {
+          this.beforeDelete();
+          }
+          when AFTER_INSERT {
+          this.afterInsert();
+          }
+          when AFTER_UPDATE {
+          this.afterUpdate();
+          }
+          when AFTER_DELETE {
+          this.afterDelete();
+          }
+          when AFTER_UNDELETE {
+          this.afterUndelete();
+          }
+      }
     }
     
+    // Set the maximum number of times the handler can run
     public void setMaxLoopCount(Integer max) {
       String handlerName = getHandlerName();
       if(!TriggerHandler.loopCountMap.containsKey(handlerName)) {
@@ -74,6 +90,7 @@ public virtual class TriggerHandler {
       }
     }
     
+    // Clear the maximum loop count for the handler
     public void clearMaxLoopCount() {
       this.setMaxLoopCount(-1);
     }
@@ -82,31 +99,37 @@ public virtual class TriggerHandler {
      * public static methods
      ***************************************/
     
+    // Bypass a particular handler from execution
     public static void bypass(String handlerName) {
-      TriggerHandler.bypassedHandlers.add(handlerName);
+        TriggerHandler.bypassedHandlers.add(handlerName);
     }
-    
+
+    // Allow a previously bypassed handler to execute
     public static void clearBypass(String handlerName) {
-      TriggerHandler.bypassedHandlers.remove(handlerName);
+        TriggerHandler.bypassedHandlers.remove(handlerName);
     }
-    
+
+    // Check if a handler is bypassed
     public static Boolean isBypassed(String handlerName) {
-      return TriggerHandler.bypassedHandlers.contains(handlerName);
+        return TriggerHandler.bypassedHandlers.contains(handlerName);
     }
-    
+
+    // Clear all bypassed handlers
     public static void clearAllBypasses() {
-      TriggerHandler.bypassedHandlers.clear();
+        TriggerHandler.bypassedHandlers.clear();
     }
     
     /***************************************
      * private instancemethods
      ***************************************/
     
+    // Set the trigger's execution context
     @TestVisible
     private void setTriggerContext() {
       this.setTriggerContext(null, false);
     }
     
+    // Detailed method to determine and set the trigger's execution context
     @TestVisible
     private void setTriggerContext(String ctx, Boolean testMode) {
         if(!Trigger.isExecuting && !testMode) {
@@ -140,7 +163,7 @@ public virtual class TriggerHandler {
         }
     }
     
-    // increment the loop count
+    // Increment how many times the handler has been run
     @TestVisible
     private void addToLoopCount() {
       String handlerName = getHandlerName();
@@ -153,7 +176,7 @@ public virtual class TriggerHandler {
       }
     }
     
-    // make sure this trigger should continue to run
+    // Verify that the trigger should execute
     @TestVisible
     private Boolean validateRun() {
       if(!this.isTriggerExecuting || this.context == null) {
@@ -162,6 +185,7 @@ public virtual class TriggerHandler {
       return !TriggerHandler.bypassedHandlers.contains(getHandlerName());
     }
     
+    // Get the name of the handler that's currently executing
     @TestVisible
     private String getHandlerName() {
       return String.valueOf(this).substring(0,String.valueOf(this).indexOf(':'));
@@ -171,7 +195,8 @@ public virtual class TriggerHandler {
      * context methods
      ***************************************/
     
-    // context-specific methods for override
+    // These are virtual methods that can be overridden in child classes 
+    // to provide specific functionalities for different trigger contexts.
     @TestVisible
     protected virtual void beforeInsert(){}
     @TestVisible
@@ -191,7 +216,8 @@ public virtual class TriggerHandler {
      * inner classes
      ***************************************/
     
-    // inner class for managing the loop count per handler
+    // LoopCount manages how many times a handler is allowed to run. 
+    // This is to prevent infinite loops or excessive operations that could hit governor limits.
     @TestVisible
     private class LoopCount {
       private Integer max;
@@ -229,7 +255,7 @@ public virtual class TriggerHandler {
       }
     }
     
-    // possible trigger contexts
+    // This enum represents possible trigger contexts, making it easier to identify the current operation.
     @TestVisible
     private enum TriggerContext {
       BEFORE_INSERT, BEFORE_UPDATE, BEFORE_DELETE,
@@ -237,7 +263,7 @@ public virtual class TriggerHandler {
       AFTER_UNDELETE
     }
     
-    // exception class
+    // Custom exception to handle specific errors related to the trigger handler.
     public class TriggerHandlerException extends Exception {}
     
     }
