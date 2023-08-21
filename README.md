@@ -1,6 +1,6 @@
-# Developer Kickstart Week 8: Advanced Trigger Techniques
+# Developer Kickstart: Advanced Trigger Techniques
 
-This project is an integral part of the Developer Kickstart Week 7 curriculum at Cloud Code Academy. Designed specifically for budding Salesforce developers, this module delves deep into the realm of triggers, emphasizing advanced best practices, the utility of trigger helpers, and the integration of trigger frameworks.
+This project is an integral part of the Developer Kickstart curriculum at Cloud Code Academy. Designed specifically for budding Salesforce developers, this module delves deep into the realm of triggers, emphasizing advanced best practices, the utility of trigger helpers, and the integration of trigger frameworks.
 
 ## Goals of the Practice
 
