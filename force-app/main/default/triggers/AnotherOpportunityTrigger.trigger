@@ -48,7 +48,7 @@ trigger AnotherOpportunityTrigger on Opportunity (before insert, after insert, b
             // Append Stage changes in Opportunity Description
             for (Opportunity opp : Trigger.new){
                 for (Opportunity oldOpp : Trigger.old){
-                    if (opp.StageName != null){
+                    if (opp.Id == oldOpp.Id && opp.StageName != oldOpp.StageName){
                         opp.Description += '\n Stage Change:' + opp.StageName + ':' + DateTime.now().format();
                     }
                 }                
