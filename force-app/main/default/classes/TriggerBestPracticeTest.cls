@@ -3,7 +3,7 @@ Trigger Framework and Best Practices
 In this challenge, you will be refactoring and consolidating multiple files to follow best practices for triggers.
 
 1. AccountTrigger Helper: 
-   Use the AccountHelper stubbed class to modulize the AccountTriggerCode. 
+   Use the AccountHelper stubbed class to modularized the AccountTriggerCode. 
    This class contains methods that respond to specific Account trigger events. 
    Update and customize the helper methods as necessary for your specific Account logic.
 
@@ -17,7 +17,7 @@ In this challenge, you will be refactoring and consolidating multiple files to f
    This handler will be responsible for all Opportunity-related trigger events. By consolidating the 
    logic into one handler, you ensure more maintainable and organized code.
    The OpportunityTriggerHandler class was not provided. You will need to create this class from scratch and extend the TriggerHandler class.
-   Some of the logic for AnotherOpporunityTrigger and OpportunityTrigger may conflict. 
+   Some of the logic for AnotherOpportunityTrigger and OpportunityTrigger may conflict. 
    Ensure that the logic is combined into one method and that the method is called from the appropriate trigger event.
 
 Important Note: 
@@ -36,7 +36,7 @@ public with sharing class TriggerBestPracticeTest {
     */
 
     @IsTest 
-    static void testAccountTrgger_setTypeProspect() {
+    static void testAccountTrigger_setTypeProspect() {
         // Prepare the test data
         List<Account> accountTypeProspect = new List<Account>();
         List<Account> accountTypeNotChange = new List<Account>();
@@ -83,7 +83,7 @@ public with sharing class TriggerBestPracticeTest {
     * Trigger should only fire on insert.
     */
     @IsTest 
-    static void testAccountTrgger_addressCopy() {
+    static void testAccountTrigger_addressCopy() {
         // Prepare the test data
         List<Account> accountsToInsert = new List<Account>();
         for (Integer i = 0; i < 200; i++) {
@@ -142,7 +142,7 @@ public with sharing class TriggerBestPracticeTest {
     * Trigger should only fire on insert.
     */
     @IsTest 
-    static void testAccountTrgger_setRating() {
+    static void testAccountTrigger_setRating() {
         // Prepare the test data
         List<Account> accountsToInsert = new List<Account>();
         List<Account> accountsNotHot = new List<Account>();
@@ -202,7 +202,7 @@ public with sharing class TriggerBestPracticeTest {
     * Trigger should only fire on insert.
     */
     @IsTest
-    static void testAccountTrgger_defaultContact() {
+    static void testAccountTrigger_defaultContact() {
         // Prepare the test data
         List<Account> accountsToInsert = new List<Account>();
         for (Integer i = 0; i < 400; i++) {
