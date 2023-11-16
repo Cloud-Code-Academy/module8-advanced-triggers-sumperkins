@@ -1,7 +1,6 @@
 /*
-AccountHelper Class Overview
+AccountHelper Overview
 
-Description:
 The `AccountHelper` class is designed to provide helper methods that assist in performing specific operations on Account records. 
 This class is intended to modularize the logic used in the `AccountTrigger` to ensure separation of concerns, improve readability, and ease maintenance. 
 

@@ -1,5 +1,5 @@
 /*
-AnotherOpportunityTrigger Description
+AnotherOpportunityTrigger Overview
 
 This trigger was initially created for handling various events on the Opportunity object. It was developed by a prior developer and has since been noted to cause some issues in our org.
 

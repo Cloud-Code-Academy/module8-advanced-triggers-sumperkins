@@ -1,6 +1,6 @@
 /*
 Trigger Framework and Best Practices
-In this challenge, you will be refactoring and consolidating multiple files to follow best practices for triggers.
+In this assignment, you will be refactoring and consolidating multiple files to follow best practices for triggers.
 
 1. AccountTrigger Helper: 
    Use the AccountHelper stubbed class to modularized the AccountTriggerCode. 
@@ -21,7 +21,7 @@ In this challenge, you will be refactoring and consolidating multiple files to f
    Ensure that the logic is combined into one method and that the method is called from the appropriate trigger event.
 
 Important Note: 
-No test methods should need to be altered to pass this challenge.
+No test methods should need to be altered for the tests to pass.
 */
 @IsTest
 public with sharing class TriggerBestPracticeTest {
@@ -29,12 +29,17 @@ public with sharing class TriggerBestPracticeTest {
     // Part 1 - AccountTrigger Changes
     /*
     * Update the AccountTrigger.trigger to use the AccountHelper class
-    * You can use the AccountTrigger provided or the previous one you created is last weeks lecture
-    * If you are using last lectures AccountTrigger you created. Copy and paste the code from the previous week's project into this project and deploy it to your org
+    * You can use the AccountTrigger provided or the previous one you created in the last assignment
+    * If you are using the last assignments AccountTrigger you created. Copy and paste the code from the previous modules's project into this project and deploy it to your org
     * Implement the AccountHelper class methods for each of the distinct trigger logic from the AccountTrigger
     * All of the AccountTrigger tests should pass if you have implemented the AccountHelper class correctly
     */
 
+    /*
+     * Account Trigger
+	 * When an account is inserted change the account type to 'Prospect' if there is no value in the type field.
+     * Trigger should only fire on insert.
+     */
     @IsTest 
     static void testAccountTrigger_setTypeProspect() {
         // Prepare the test data
@@ -461,9 +466,9 @@ public with sharing class TriggerBestPracticeTest {
     * Methods from both trigger may have conflicting criteria and should be combined into one method
     * Only one OpportunityTrigger needs to run the OpportunityTriggerHandler class and the other can be commented out
     * All of the OpportunityTrigger and AnotherOpportunityTrigger tests should pass if you have implemented the OpportunityTriggerHandler class correctly
-    * You can use the OpportunityTrigger provided or the previous one you created is last weeks lecture
-    * If you are using last lectures OpportunityTrigger you created. Copy and paste the code from the previous week's project into this project and deploy it to your org
-    * Advanced/Optional - Utilize an OpportunityHelper class to moduliarize the OpportunityTriggerHandler class
+    * You can use the OpportunityTrigger provided or the previous one you created is last assignment
+    * If you are using last lectures OpportunityTrigger you created. Copy and paste the code from the previous lecture's project into this project and deploy it to your org
+    * Advanced/Optional - Utilize an OpportunityHelper class to modularize the OpportunityTriggerHandler class
     */
 
     /*

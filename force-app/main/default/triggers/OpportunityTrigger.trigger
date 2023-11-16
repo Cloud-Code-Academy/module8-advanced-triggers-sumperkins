@@ -1,5 +1,5 @@
 /*
-OpportunityTrigger Class Description
+OpportunityTrigger Overview
 
 This class defines the trigger logic for the Opportunity object in Salesforce. It focuses on three main functionalities:
 1. Ensuring that the Opportunity amount is greater than $5000 on update.
