@@ -1,4 +1,4 @@
-name: Week 7 Run Apex Unit Tests Manually
+name: Module 8 Run Apex Unit Tests Manually
 
 on:
     workflow_dispatch:
