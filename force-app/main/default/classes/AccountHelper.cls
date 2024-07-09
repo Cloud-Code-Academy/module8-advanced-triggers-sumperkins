@@ -28,19 +28,51 @@ Always ensure that your helper methods are bulk-safe to handle multiple records 
 */
 public with sharing class AccountHelper {
     
-    public void setTypeProspect(SObject objects){
-
+    public static void setTypeProspect(List<Account> accounts){
+        for (Account acc : accounts) {
+            if (String.isBlank(acc.Type)) {
+                acc.Type = 'Prospect';
+            }
+        }
     }
 
-    void addressCopy(){
-
+    public static void addressCopy(List<Account> accounts) {
+        for (Account acc : accounts) {
+            if (String.isBlank(acc.BillingStreet) && 
+                String.isBlank(acc.BillingCity) && 
+                String.isBlank(acc.BillingState) && 
+                String.isBlank(acc.BillingPostalCode) && 
+                String.isBlank(acc.BillingCountry)) {
+    
+                acc.BillingCity = acc.ShippingCity;
+                acc.BillingState = acc.ShippingState;
+                acc.BillingPostalCode = acc.ShippingPostalCode;
+                acc.BillingCountry = acc.ShippingCountry;
+            }
+        }
     }
 
-    //[public | private ] [static] data_type setRating (input parameters) {
-    //  The body of the method
-    //}
+    public static void setRating(List<Account> accounts) {
+        for (Account acc : accounts) {
+            if (acc.Phone != null && acc.Website != null && acc.Fax != null) {
+                acc.Rating = 'Hot';
+            }
+        }
+    }
 
-    //[public | private ] [static] data_type defaultContact (input parameters) {
-    //  The body of the method
-    //}
+
+    public static void defaultContact(List<Account> accounts) {
+        List<Contact> contacts = new List<Contact>();
+        for (Account acc : accounts) {
+            Contact newContact = new Contact(
+                LastName = 'DefaultContact',
+                AccountId = acc.Id,
+                Email = 'default@email.com'
+            );
+            contacts.add(newContact);
+        }
+        if (!contacts.isEmpty()) {
+            insert contacts;
+        }
+    }
 }
